@@ -1,6 +1,7 @@
 from typing import Any, Dict
+from fastapi import HTTPException
 from repositories.evento_repository import EventoRepository
-from schemas.evento import EventoResponseSchema
+from schemas.evento import EventoResponseSchema, EventoDetailResponseSchema
 
 
 class EventoService:
@@ -14,4 +15,13 @@ class EventoService:
             "ok": True,
             "total_registros": len(data),
             "data": data,
+        }
+
+    def get_evento_by_id(self, evento_id: int) -> Dict[str, Any]:
+        evento = self.repository.get_by_id(evento_id)
+        if not evento:
+            raise HTTPException(status_code=404, detail="Evento no encontrado")
+        return {
+            "ok": True,
+            "data": EventoDetailResponseSchema.model_validate(evento).model_dump(),
         }

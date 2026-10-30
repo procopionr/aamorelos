@@ -10,5 +10,5 @@ class EventoRepository:
     def get_all(self) -> List[models.Evento]:
         return self.db.query(models.Evento).all()
 
-    def get_by_id(self, evento_id: str) -> Optional[models.Evento]:
+    def get_by_id(self, evento_id: int) -> Optional[models.Evento]:
         return self.db.query(models.Evento).filter(models.Evento.id == evento_id).first()
