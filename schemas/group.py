@@ -116,6 +116,24 @@ class GroupByDistrictResponseSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class GroupByStateResponseSchema(GroupByDistrictResponseSchema):
+    municipality: Optional[str] = None
+    type: Optional[str] = None
+    gender: Optional[str] = None
+    language: Optional[str] = None
+
+    @classmethod
+    def from_model(cls, g) -> "GroupByStateResponseSchema":
+        base_data = GroupByDistrictResponseSchema.model_validate(g).model_dump()
+        base_data.update({
+            "municipality": getattr(getattr(g, "municipality", None), "name", None),
+            "type": getattr(getattr(g, "group_type", None), "name", None),
+            "gender": getattr(getattr(g, "gender", None), "name", None),
+            "language": getattr(getattr(g, "language", None), "name", None),
+        })
+        return cls.model_validate(base_data)
+
+
 class GroupByDistrictListResponseSchema(BaseModel):
     ok: bool
     district_id: str
@@ -123,7 +141,9 @@ class GroupByDistrictListResponseSchema(BaseModel):
     data: list[GroupByDistrictResponseSchema]
 
 
-class GroupByStateListResponseSchema(GroupByDistrictListResponseSchema):
+class GroupByStateListResponseSchema(BaseModel):
+    ok: bool
     state_id: str
-    district_id: str | None = None
-    data: list[GroupByDistrictResponseSchema]
+    district_id: Optional[str] = None
+    total_registros: int
+    data: list[GroupByStateResponseSchema]

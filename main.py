@@ -8,10 +8,12 @@ from routers import (
     areas,
     countries,
     districts,
+    events,
     group_genders,
     group_types,
     groups,
     languages,
+    reflections,
     regions,
     states,
 )
@@ -42,6 +44,8 @@ api_router.include_router(group_genders.router)
 api_router.include_router(languages.router)
 api_router.include_router(group_types.router)
 api_router.include_router(groups.router)
+api_router.include_router(events.router)
+api_router.include_router(reflections.router)
 
 app.include_router(api_router)
 

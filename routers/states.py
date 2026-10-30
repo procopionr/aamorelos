@@ -3,7 +3,7 @@ from typing import Any, Dict
 from dependencies import get_area_by_state_service, get_district_by_state_service, get_group_by_state_service
 from fastapi import APIRouter, Depends
 from schemas.catalog import AreaListResponseSchema
-from schemas.district import DistrictListResponseSchema
+from schemas.district import DistrictByStateListResponseSchema
 from schemas.group import GroupByStateListResponseSchema
 from services.area_by_state_service import AreaByStateService
 from services.district_by_state_service import DistrictByStateService
@@ -20,7 +20,7 @@ def get_areas_by_state(
     return service.obtener_areas_por_estado(state_id)
 
 
-@router.get("/{state_id}/districts", response_model=DistrictListResponseSchema)
+@router.get("/{state_id}/districts", response_model=DistrictByStateListResponseSchema)
 def get_districts_by_state(
     state_id: str,
     service: DistrictByStateService = Depends(get_district_by_state_service),

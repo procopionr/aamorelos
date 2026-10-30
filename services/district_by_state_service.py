@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from repositories.district_repository import DistrictRepository
 from repositories.municipality_repository import MunicipalityRepository
 from repositories.state_repository import StateRepository
-from schemas.district import DistrictResponseSchema
+from schemas.district import DistrictByStateResponseSchema
 
 
 class DistrictByStateService:
@@ -28,7 +28,7 @@ class DistrictByStateService:
         municipality_ids = [m.id for m in municipalities]
 
         districts = self.district_repository.get_by_municipality_ids(municipality_ids)
-        data = [DistrictResponseSchema.model_validate(d).model_dump() for d in districts]
+        data = [DistrictByStateResponseSchema.from_model(d).model_dump() for d in districts]
         return {
             "ok": True,
             "state_id": state_id,

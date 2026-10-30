@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from repositories.group_repository import GroupRepository
 from repositories.municipality_repository import MunicipalityRepository
 from repositories.state_repository import StateRepository
-from schemas.group import GroupByDistrictResponseSchema
+from schemas.group import GroupByStateResponseSchema
 
 
 class GroupByStateService:
@@ -28,7 +28,7 @@ class GroupByStateService:
         municipality_ids = [m.id for m in municipalities]
 
         groups = self.group_repository.get_by_municipality_ids(municipality_ids)
-        data = [GroupByDistrictResponseSchema.model_validate(g).model_dump() for g in groups]
+        data = [GroupByStateResponseSchema.from_model(g).model_dump() for g in groups]
         return {
             "ok": True,
             "state_id": state_id,

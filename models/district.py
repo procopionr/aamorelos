@@ -1,5 +1,6 @@
 ﻿from database.database import Base
 from sqlalchemy import Column, Date, ForeignKey, Integer, TEXT, VARCHAR
+from sqlalchemy.orm import relationship
 
 
 class District(Base):
@@ -19,3 +20,6 @@ class District(Base):
     phone = Column(VARCHAR(50))
     service_hours = Column(TEXT)
     is_active = Column(Integer)
+
+    municipality = relationship("Municipality")
+    area = relationship("Area")

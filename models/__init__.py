@@ -8,6 +8,8 @@ from models.group_type import GroupType
 from models.language import Language
 from models.group_gender import GroupGender
 from models.group import Group
+from models.evento import Evento
+from models.reflexion import Reflexion
 
 __all__ = [
     "Country",
@@ -20,4 +22,6 @@ __all__ = [
     "Language",
     "GroupGender",
     "Group",
+    "Evento",
+    "Reflexion",
 ]
