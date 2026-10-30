@@ -138,7 +138,7 @@ class GroupByDistrictListResponseSchema(BaseModel):
     ok: bool
     district_id: str
     total_registros: int
-    data: list[GroupByDistrictResponseSchema]
+    data: list[GroupByStateResponseSchema]
 
 
 class GroupByStateListResponseSchema(BaseModel):

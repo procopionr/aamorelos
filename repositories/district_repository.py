@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from sqlalchemy.orm import Session
 
 import models
@@ -32,3 +32,6 @@ class DistrictRepository:
             .filter(models.District.municipality_id.in_(municipality_ids))
             .all()
         )
+
+    def get_by_id(self, district_id: str) -> Optional[models.District]:
+        return self.db.query(models.District).filter(models.District.id == district_id).first()
